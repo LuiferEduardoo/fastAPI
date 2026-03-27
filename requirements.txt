@@ -1,0 +1,22 @@
+# FastAPI con todas las dependencias de [standard]
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+
+# Dependencias core
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# Validación y datos
+email-validator==2.2.0
+python-multipart==0.0.20
+orjson==3.10.14
+jsonschema==4.23.0
+
+# Cliente HTTP
+httpx==0.28.1
+
+# Templates
+jinja2==3.1.6
+
+# Seguridad para cookies
+itsdangerous==2.2.0

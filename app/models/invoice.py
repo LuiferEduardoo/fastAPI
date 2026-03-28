@@ -1,10 +1,12 @@
 from pydantic import BaseModel
+from sqlModel import SQLModel
+
 from typing import List
 from .customer import Customer
 from .transaction import Transaction
 
 
-class InvoiceBase(BaseModel):
+class InvoiceBase(SQLModel):
     customer: Customer
     transactions: List[Transaction]
     total: int 
@@ -16,5 +18,5 @@ class InvoiceBase(BaseModel):
 class InvoiceCreate(InvoiceBase):
     pass
 
-class Invoice(InvoiceBase):
+class Invoice(InvoiceBase, table=True):
     id: int | None

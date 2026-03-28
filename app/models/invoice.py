@@ -4,8 +4,7 @@ from .customer import Customer
 from .transaction import Transaction
 
 
-class Invoice(BaseModel):
-    id: int
+class InvoiceBase(BaseModel):
     customer: Customer
     transactions: List[Transaction]
     total: int 
@@ -13,3 +12,9 @@ class Invoice(BaseModel):
     @property
     def total_amount(self) -> float:
         return sum(transaction.amount for transaction in self.transactions)
+
+class InvoiceCreate(InvoiceBase):
+    pass
+
+class Invoice(InvoiceBase):
+    id: int | None

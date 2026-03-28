@@ -1,12 +1,12 @@
-from pydantic import BaseModel
+from sqlModel import SQLModel
 
 
-class TransactionBase(BaseModel):
+class TransactionBase(SQLModel):
     amount: int
     description: str
 
 class TransactionCreate(TransactionBase):
     pass
 
-class Transaction(TransactionBase):
+class Transaction(TransactionBase, table=True):
     id: int | None

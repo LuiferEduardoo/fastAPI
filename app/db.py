@@ -1,5 +1,7 @@
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel, create_engine, Session
 from pydantic_settings import BaseSettings
+from fastapi import Depends
+from typing import Annotated
 
 
 class Settings(BaseSettings):
@@ -20,5 +22,13 @@ DATABASE_URL = f"mysql+pymysql://{settings.db_user}:{settings.db_password}@{sett
 engine = create_engine(DATABASE_URL, echo=True)
 
 
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+
 def init_db():
     SQLModel.metadata.create_all(engine)
+
+
+SessionDep = Annotated[Session, Depends(get_session)]

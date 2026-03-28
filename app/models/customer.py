@@ -1,8 +1,8 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from sqlModel import SQLModel
 
 
-class CustomerBase(BaseModel):
+class CustomerBase(SQLModel):
     name: str
     description: str | None
     email: EmailStr
@@ -11,5 +11,5 @@ class CustomerBase(BaseModel):
 class CustomerCreate(CustomerBase):
     pass
 
-class Customer(CustomerBase):
+class Customer(CustomerBase, table=True):
     id: int | None

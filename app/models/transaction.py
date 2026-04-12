@@ -1,4 +1,5 @@
-from sqlModel import SQLModel, Field
+from sqlmodel import SQLModel, Field
+from typing import Optional
 
 
 class TransactionBase(SQLModel):
@@ -9,4 +10,4 @@ class TransactionCreate(TransactionBase):
     pass
 
 class Transaction(TransactionBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)

@@ -1,22 +1,17 @@
-from pydantic import BaseModel
-from sqlModel import SQLModel, Field
-
-from typing import List
+from sqlmodel import SQLModel, Field, Relationship
+from typing import Optional
 from .customer import Customer
-from .transaction import Transaction
 
 
 class InvoiceBase(SQLModel):
-    customer: Customer
-    transactions: List[Transaction]
     total: int = Field(default=None)
-    
-    @property
-    def total_amount(self) -> float:
-        return sum(transaction.amount for transaction in self.transactions)
+
 
 class InvoiceCreate(InvoiceBase):
-    pass
+    customer_id: int
+
 
 class Invoice(InvoiceBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
+    customer_id: Optional[int] = Field(default=None, foreign_key="customer.id")
+    customer: Optional[Customer] = Relationship(back_populates="invoices")

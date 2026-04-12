@@ -2,6 +2,7 @@ from sqlmodel import SQLModel, create_engine, Session
 from pydantic_settings import BaseSettings
 from fastapi import Depends
 from typing import Annotated
+from contextlib import asynccontextmanager
 
 
 class Settings(BaseSettings):
@@ -27,8 +28,13 @@ def get_session():
         yield session
 
 
-def init_db():
+@asynccontextmanager
+async def init_db():
     SQLModel.metadata.create_all(engine)
+    yield
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
+
+# Importar modelos para registrar en metadata
+from app.models import Customer, Transaction, Invoice

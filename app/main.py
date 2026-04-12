@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(
-    title="Mi API con FastAPI",
-    description="Una API REST construida con FastAPI",
-    version="1.0.0"
-)
+from app.db import init_db
+
+app = FastAPI(lifespan=init_db)
 
 # Configurar CORS
 app.add_middleware(
